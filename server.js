@@ -7,7 +7,7 @@ import "dotenv/config";
 import cors from "cors";
 import UserRoute from "./routes/users.js";
 import ProductRoute from "./routes/products.js";
-import CommentRoute from "./routes/Comment.js";
+import CommentRoute from "./routes/comment.js";
 import AuthRoute from "./routes/auth.js";
 import ChatRoute from "./routes/chat.js";
 
