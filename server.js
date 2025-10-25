@@ -27,7 +27,7 @@ const missingEnvVars = requiredEnvVars.filter((envVar) => !process.env[envVar]);
 
 if (missingEnvVars.length > 0) {
   console.error(
-    "❌ Missing required environment variables:",
+    "Missing required environment variables:",
     missingEnvVars.join(", ")
   );
   console.error(
@@ -36,7 +36,7 @@ if (missingEnvVars.length > 0) {
   process.exit(1);
 }
 
-console.log("✅ All required environment variables are set");
+console.log("All required environment variables are set");
 
 mongoose
   .connect(process.env.MONGO_URI, {
@@ -68,28 +68,29 @@ const io = new Server(httpServer, {
 });
 
 app.use((req, res, next) => {
-  const allowedOrigins = process.env.FRONTEND_URL
-    ? [process.env.FRONTEND_URL]
+  const allowedOrigins = process.env.NODE_ENV === 'production'
+    ? [process.env.FRONTEND_URL || "https://my-thrift-front-end-2m7o.vercel.app"]
     : ["http://localhost:5173"];
+  
   const origin = req.headers.origin;
-
+  
   if (allowedOrigins.includes(origin)) {
     res.header("Access-Control-Allow-Origin", origin);
   }
-
+  
   res.header("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE,OPTIONS");
   res.header(
     "Access-Control-Allow-Headers",
     "Content-Type, Authorization, ngrok-skip-browser-warning"
   );
-
+  res.header("Access-Control-Allow-Credentials", "true"); // إذا تستخدم cookies
+  
   if (req.method === "OPTIONS") {
-    res.sendStatus(200);
-  } else {
-    next();
+    return res.sendStatus(200); // حط return عشان ما يكمل
   }
+  
+  next();
 });
-
 app.use(express.json());
 
 // Make io available in routes
