@@ -66,7 +66,6 @@ const io = new Server(httpServer, {
   // Set maximum connections limit (important for free server)
   maxHttpBufferSize: 1e6, // 1MB
 });
-const cors = require('cors');
 
 app.use(cors({
   origin: [
