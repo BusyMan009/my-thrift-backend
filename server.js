@@ -83,10 +83,10 @@ app.use((req, res, next) => {
     "Access-Control-Allow-Headers",
     "Content-Type, Authorization, ngrok-skip-browser-warning"
   );
-  res.header("Access-Control-Allow-Credentials", "true"); // إذا تستخدم cookies
+  res.header("Access-Control-Allow-Credentials", "true"); 
   
   if (req.method === "OPTIONS") {
-    return res.sendStatus(200); // حط return عشان ما يكمل
+    return res.sendStatus(200); 
   }
   
   next();
